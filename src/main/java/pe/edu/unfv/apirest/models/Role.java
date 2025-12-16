@@ -1,12 +1,14 @@
 package pe.edu.unfv.apirest.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -31,7 +33,7 @@ public class Role {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserHasRoles> users = new HashSet<>();
+    private Set<UserHasRoles> userHasRoles = new HashSet<>();
 
     public Role(){}
 

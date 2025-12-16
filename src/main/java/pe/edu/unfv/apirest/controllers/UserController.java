@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.edu.unfv.apirest.dto.user.CreateUserRequest;
+import pe.edu.unfv.apirest.dto.user.CreateUserResponse;
 import pe.edu.unfv.apirest.models.User;
 import pe.edu.unfv.apirest.services.UserService;
 
@@ -23,8 +24,8 @@ public class UserController {
     //DELETE - ELIMINAR
 
     @PostMapping("/create")
-    public ResponseEntity<User> create(@RequestBody CreateUserRequest request){
-        User user = userService.create(request);
+    public ResponseEntity<CreateUserResponse> create(@RequestBody CreateUserRequest request){
+        CreateUserResponse user = userService.create(request);
         return ResponseEntity.ok(user);
     }
 }
