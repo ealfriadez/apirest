@@ -109,4 +109,26 @@ public class UserService {
 
         return response;
     }
+
+    @Transactional
+    public CreateUserResponse findById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El usuario no esta registrado"));
+
+        List<Role> roles = roleRepository.findAllByUserHasRoles_User_Id(user.getId());
+        List<RoleDTO> roleDTOS = roles.stream()
+                .map(role -> new RoleDTO(role.getId(), role.getName(), role.getImage(), role.getRoute()))
+                .toList();
+
+        CreateUserResponse createUserResponse = new CreateUserResponse();
+        createUserResponse.setId(user.getId());
+        createUserResponse.setName(user.getName());
+        createUserResponse.setLastname(user.getLastname());
+        createUserResponse.setEmail(user.getEmail());
+        createUserResponse.setImage(user.getImage());
+        createUserResponse.setPhone(user.getPhone());
+        createUserResponse.setRoles(roleDTOS);
+
+        return createUserResponse;
+    }
 }
