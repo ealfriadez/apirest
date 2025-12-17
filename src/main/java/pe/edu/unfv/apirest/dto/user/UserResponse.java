@@ -3,12 +3,11 @@ package pe.edu.unfv.apirest.dto.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import pe.edu.unfv.apirest.dto.role.RoleDTO;
-import pe.edu.unfv.apirest.models.Role;
 
 import java.util.List;
 
 @Data
-public class CreateUserResponse {
+public class UserResponse {
 
     public Long id;
     public String name;

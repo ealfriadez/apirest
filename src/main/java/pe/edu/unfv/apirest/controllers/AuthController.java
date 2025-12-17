@@ -2,17 +2,15 @@ package pe.edu.unfv.apirest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.edu.unfv.apirest.dto.user.CreateUserRequest;
-import pe.edu.unfv.apirest.dto.user.CreateUserResponse;
+import pe.edu.unfv.apirest.dto.user.UserResponse;
 import pe.edu.unfv.apirest.dto.user.LoginRequest;
 import pe.edu.unfv.apirest.dto.user.LoginResponse;
-import pe.edu.unfv.apirest.models.User;
 import pe.edu.unfv.apirest.services.UserService;
 
 import java.util.Map;
@@ -28,7 +26,7 @@ public class AuthController {
     public ResponseEntity<?> create(@RequestBody CreateUserRequest request){
 
         try{
-            CreateUserResponse user = userService.create(request);
+            LoginResponse user = userService.create(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
