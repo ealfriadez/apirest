@@ -1,6 +1,6 @@
 server:
   port: 3000
-  address: 192.168.68.59
+  address: 192.168.1.2
 
 spring:
   application:
