@@ -22,11 +22,11 @@ public class UserController {
     //PUT - ACTUALIZAR
     //DELETE - ELIMINAR
 
-//    @PostMapping("/create")
-//    public ResponseEntity<UserResponse> create(@RequestBody CreateUserRequest request){
-//        UserResponse user = userService.create(request);
-//        return ResponseEntity.ok(user);
-//    }
+   /*@PostMapping("/create")
+   public ResponseEntity<UserResponse> create(@RequestBody CreateUserRequest request){
+      UserResponse user = userService.create(request);
+      return ResponseEntity.ok(user);
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
