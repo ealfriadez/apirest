@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pe.edu.unfv.apirest.dto.category.CategoryResponse;
 import pe.edu.unfv.apirest.dto.product.CreateProductRequest;
 import pe.edu.unfv.apirest.dto.product.ProductResponse;
 import pe.edu.unfv.apirest.dto.product.UpdateProductRequest;
@@ -121,5 +122,13 @@ public class ProductService {
         }
         Product updateProduct = productRepository.save(product);
         return productMapper.toProductResponse(updateProduct);
+    }
+
+    @Transactional
+    public List<ProductResponse> findAll(){
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(product -> {
+            return productMapper.toProductResponse(product);
+        }).toList();
     }
 }

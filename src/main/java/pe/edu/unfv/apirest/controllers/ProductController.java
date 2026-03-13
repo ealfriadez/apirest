@@ -24,6 +24,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping
+    public ResponseEntity<?> findAll(){
+        try{
+            List<ProductResponse> products = productService.findAll();
+            return ResponseEntity.ok(products);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "message", e.getMessage(),
+                    "statusCode", HttpStatus.BAD_REQUEST.value()
+            ));
+        }
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> create(@ModelAttribute CreateProductRequest request){
         try{
