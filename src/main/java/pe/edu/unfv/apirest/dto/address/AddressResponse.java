@@ -1,4 +1,4 @@
-package pe.edu.unfv.apirest.dto.category;
+package pe.edu.unfv.apirest.dto.address;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,12 +6,15 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class CategoryResponse {
+public class AddressResponse {
 
     private Long id;
-    private String name;
-    private String description;
-    private String image;
+
+    @JsonProperty("id_user")
+    private Long idUser;
+
+    private String  address;
+    private String neighborhood;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
