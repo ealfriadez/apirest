@@ -32,4 +32,20 @@ public class UserMapper {
         }
         return response;
     }
+
+    public UserResponse toSimpleUserResponse(User user){
+
+       UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setLastname(user.getLastname());
+        response.setEmail(user.getEmail());
+        response.setPhone(user.getPhone());
+
+        if(user.getImage() != null){
+            String imageUrl = APIConfig.BASE_URL + user.getImage();
+            response.setImage(imageUrl);
+        }
+        return response;
+    }
 }
