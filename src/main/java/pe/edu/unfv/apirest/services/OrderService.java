@@ -2,11 +2,17 @@ package pe.edu.unfv.apirest.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.edu.unfv.apirest.dto.order.CreateOrderRequest;
 import pe.edu.unfv.apirest.dto.order.CreateOrderResponse;
+import pe.edu.unfv.apirest.dto.order.OrderResponse;
+import pe.edu.unfv.apirest.dto.order.mapper.OrderMapper;
 import pe.edu.unfv.apirest.models.*;
 import pe.edu.unfv.apirest.models.Id.OrderHasProductId;
 import pe.edu.unfv.apirest.repositories.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -21,7 +27,10 @@ public class OrderService {
     private AddressRepository addressRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderMapper orderMapper;
 
+    @Transactional
     public CreateOrderResponse create(CreateOrderRequest request){
         User user = userRepository.findById(request.getIdUser()).orElseThrow(
                 ()-> new RuntimeException("El usuario no existe")
@@ -64,5 +73,14 @@ public class OrderService {
         response.setUpdatedAt(savedOrder.getUpdatedAt());
 
         return response;
+    }
+
+    @Transactional
+    public List<OrderResponse> findByUserId(Long idUser){
+        User user = userRepository.findById(idUser).orElseThrow(
+                ()-> new RuntimeException("El usuario no existe")
+        );
+        List<Order> orders = orderRepository.findByUser(user);
+        return orders.stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
     }
 }
