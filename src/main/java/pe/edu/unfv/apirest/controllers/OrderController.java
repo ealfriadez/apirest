@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.unfv.apirest.dto.order.CreateOrderRequest;
-import pe.edu.unfv.apirest.dto.order.CreateOrderResponse;
-import pe.edu.unfv.apirest.dto.order.OrderResponse;
+import pe.edu.unfv.apirest.dto.order.*;
 import pe.edu.unfv.apirest.models.Order;
 import pe.edu.unfv.apirest.services.OrderService;
 
@@ -37,6 +35,32 @@ public class OrderController {
     public ResponseEntity<?> findByUser(@PathVariable Long idUser){
         try{
             List<OrderResponse> response = orderService.findByUserId(idUser);
+            return ResponseEntity.ok(response);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "message", e.getMessage(),
+                    "statusCode", HttpStatus.BAD_REQUEST.value()
+            ));
+        }
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> findAll(){
+        try{
+            List<OrderResponse> response = orderService.findAll();
+            return ResponseEntity.ok(response);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "message", e.getMessage(),
+                    "statusCode", HttpStatus.BAD_REQUEST.value()
+            ));
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UpdateOrderRequest request) {
+        try{
+            UpdateOrderResponse response = orderService.update(id, request);
             return ResponseEntity.ok(response);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(

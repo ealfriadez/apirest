@@ -28,7 +28,8 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                                 .requestMatchers(
                                         "/auth/**",
-                                        "/uploads/**"
+                                        "/uploads/**",
+                                        "/payment/**"
                                 ).permitAll()
                         .anyRequest().authenticated()
                         )

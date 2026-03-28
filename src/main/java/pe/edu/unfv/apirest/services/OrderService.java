@@ -3,9 +3,7 @@ package pe.edu.unfv.apirest.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.edu.unfv.apirest.dto.order.CreateOrderRequest;
-import pe.edu.unfv.apirest.dto.order.CreateOrderResponse;
-import pe.edu.unfv.apirest.dto.order.OrderResponse;
+import pe.edu.unfv.apirest.dto.order.*;
 import pe.edu.unfv.apirest.dto.order.mapper.OrderMapper;
 import pe.edu.unfv.apirest.models.*;
 import pe.edu.unfv.apirest.models.Id.OrderHasProductId;
@@ -82,5 +80,29 @@ public class OrderService {
         );
         List<Order> orders = orderRepository.findByUser(user);
         return orders.stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<OrderResponse> findAll(){
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public UpdateOrderResponse update(Long id, UpdateOrderRequest request){
+        Order order = orderRepository.findById(id).orElseThrow(
+                ()-> new RuntimeException("La orden no existe")
+        );
+        order.setStatus(request.getStatus());
+        Order updateOrder = orderRepository.save(order);
+
+        UpdateOrderResponse response = new UpdateOrderResponse();
+        response.setId(updateOrder.getId());
+        response.setIdUser(updateOrder.getUser().getId());
+        response.setIdAddress(updateOrder.getAddress().getId());
+        response.setStatus(updateOrder.getStatus());
+        response.setCreatedAt(updateOrder.getCreatedAt());
+        response.setUpdatedAt(updateOrder.getUpdatedAt());
+        return response;
     }
 }
