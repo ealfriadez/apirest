@@ -3,9 +3,7 @@ package pe.edu.unfv.apirest.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.unfv.apirest.dto.payment_mercadopago.CheckoutResponse;
 import pe.edu.unfv.apirest.services.PaymentMercadoPagoService;
 
@@ -29,5 +27,21 @@ public class PaymentMercadoPAgoController {
                     "statusCode", HttpStatus.BAD_REQUEST.value()
             ));
         }
+    }
+
+    @GetMapping("/failure")
+    public ResponseEntity<?> failure(@RequestParam Map<String, String> queryParams){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+                "message", "La transaccion fallo: " + queryParams.toString(),
+                "statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value()
+        ));
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<?> pending(@RequestParam Map<String, String> queryParams){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
+                "message", "Pago pendiente: " + queryParams.toString(),
+                "statusCode", HttpStatus.ACCEPTED.value()
+        ));
     }
 }

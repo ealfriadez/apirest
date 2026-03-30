@@ -38,7 +38,7 @@ public class PaymentMercadoPagoService {
                     .items(List.of(itemRequest))
                     .backUrls(backUrls)
                     .autoReturn("approved")
-                    .notificationUrl(NGROK_URL + "/api/webhooksmercadopago")
+                    .notificationUrl(NGROK_URL + "/api/webhooks/mercadopago")
                     .build();
 
             PreferenceClient client = new PreferenceClient();

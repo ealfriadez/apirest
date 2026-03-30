@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Redirigiendo</title></head>
+<body>
+<p>Redirigiendo a la aplicacion...</p>
+<a href="myapp://payment_stripe">Haz click si no se abre</a>
+<script>
+    setTimeout(() => {
+        window.location.href = "myapp://payment/success";
+    }, 1000);
+</script>
+</body>
+</html>
